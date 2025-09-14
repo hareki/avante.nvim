@@ -298,7 +298,7 @@ function Selection:create_editing_input(request, line1, line2)
       border = Config.windows.edit.border,
       height = Config.windows.edit.height,
       width = Config.windows.edit.width,
-      title = { { "Avante edit selected block", "FloatTitle" } },
+      title = { { " Avante: Edit Selected Block ", "FloatTitle" } },
     },
     start_insert = Config.windows.edit.start_insert,
   })

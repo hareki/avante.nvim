@@ -2392,7 +2392,7 @@ end
 function Sidebar:show_input_hint()
   self:close_input_hint() -- Close the existing hint window
 
-  local hint_text = (fn.mode() ~= "i" and Config.mappings.submit.normal or Config.mappings.submit.insert) .. ": submit"
+  local hint_text = (fn.mode() ~= "i" and Config.mappings.submit.normal or Config.mappings.submit.insert) .. ": Submit"
   if Config.behaviour.enable_token_counting then
     local input_value = table.concat(api.nvim_buf_get_lines(self.containers.input.bufnr, 0, -1, false), "\n")
     if self.token_count == nil then self:initialize_token_count() end
@@ -2924,15 +2924,8 @@ function Sidebar:create_input_container()
   self.containers.input:mount()
   PromptLogger.init()
 
-  local function place_sign_at_first_line(bufnr)
-    local group = "avante_input_prompt_group"
-
-    fn.sign_unplace(group, { buffer = bufnr })
-
-    fn.sign_place(0, group, "AvanteInputPromptSign", bufnr, { lnum = 1 })
-  end
-
-  place_sign_at_first_line(self.containers.input.bufnr)
+  -- Add status prefix only to the first line of input window
+  Utils.add_status_prefix(Config.windows.input.prefix, Config.windows.input.prefix_hl, self.containers.input.winid)
 
   if Utils.in_visual_mode() then
     -- Exit visual mode. Unfortunately there is no appropriate command
@@ -3002,7 +2995,7 @@ function Sidebar:create_input_container()
     buffer = self.containers.input.bufnr,
     callback = function()
       debounced_show_input_hint()
-      place_sign_at_first_line(self.containers.input.bufnr)
+      Utils.add_status_prefix(Config.windows.input.prefix, Config.windows.input.prefix_hl, self.containers.input.winid)
     end,
   })
 

@@ -84,6 +84,7 @@ function PromptInput:open()
   )
   api.nvim_set_option_value("cursorline", true, { win = winid })
   api.nvim_set_option_value("modifiable", true, { buf = bufnr })
+  Utils.add_status_prefix(Config.windows.edit.prefix, Config.windows.edit.prefix_hl, winid)
 
   local default_value_lines = {}
   if self.default_value then default_value_lines = vim.split(self.default_value, "\n") end
@@ -139,7 +140,7 @@ function PromptInput:show_shortcuts_hints()
   local buf_height = api.nvim_buf_line_count(self.bufnr)
 
   local hint_text = (vim.fn.mode() ~= "i" and Config.mappings.submit.normal or Config.mappings.submit.insert)
-    .. ": submit"
+    .. ": Submit"
 
   local display_text = hint_text
 
@@ -147,8 +148,10 @@ function PromptInput:show_shortcuts_hints()
     local spinner = self.spinner_chars[self.spinner_index]
     display_text = spinner .. " " .. hint_text
   end
+  display_text = string.format(" %s ", display_text)
 
   local buf = api.nvim_create_buf(false, true)
+  vim.bo[buf].filetype = "AvantePopupHint"
   api.nvim_buf_set_lines(buf, 0, -1, false, { display_text })
   api.nvim_buf_set_extmark(buf, self.popup_hint_id, 0, 0, {
     end_row = 0,
@@ -165,7 +168,7 @@ function PromptInput:show_shortcuts_hints()
     width = width,
     height = 1,
     row = win_height,
-    col = math.max(win_width - width, 0),
+    col = math.max(win_width - width - 1, 0), -- Add one-cell right margin right
     style = "minimal",
     border = "none",
     focusable = false,

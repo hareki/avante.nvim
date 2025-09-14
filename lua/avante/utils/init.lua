@@ -81,6 +81,36 @@ function M.get_system_info()
   return res
 end
 
+---@param prefix string
+---@param prefix_hl string
+---@param win_id integer
+function M.add_status_prefix(prefix, prefix_hl, win_id)
+  -- Strings returned from %{...} are NOT further parsed for % items => highlight markup must NOT be inside the expression result
+  local function escape_vim_str(s)
+    -- Escape single quotes for Vimscript single-quoted strings used inside %{...}
+    return (s or ""):gsub("'", "''")
+  end
+
+  local hl_start = string.format("%%#%s#", prefix_hl)
+  local hl_end = "%*"
+  local left_margin = " "
+  local right_margin = (prefix ~= "" and " ") or ""
+
+  -- Return the plain-text prefix only on the first
+  -- screen line of the first logical line. v:virtnum is 0 on the first screen
+  -- row of a wrapped line, and >0 for subsequent wrapped rows. Use get(v:,'virtnum',0)
+  -- for compatibility if v:virtnum is unavailable.
+  local expr = string.format(
+    "%%{(v:lnum==1 && get(v:,'virtnum',0)==0)?'%s%s%s':''}",
+    left_margin,
+    escape_vim_str(prefix),
+    right_margin
+  )
+
+  local status_column = hl_start .. expr .. hl_end
+  api.nvim_set_option_value("statuscolumn", status_column, { win = win_id })
+end
+
 ---@param input_cmd string
 ---@param shell_cmd string?
 local function get_cmd_for_shell(input_cmd, shell_cmd)

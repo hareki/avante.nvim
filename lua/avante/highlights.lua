@@ -27,6 +27,8 @@ local Highlights = {
   BUTTON_DANGER_HOVER = { name = "AvanteButtonDangerHover", fg = "#1e222a", bg = "#e06c75" },
   AVANTE_PROMPT_INPUT = { name = "AvantePromptInput" },
   AVANTE_PROMPT_INPUT_BORDER = { name = "AvantePromptInputBorder", link = "NormalFloat" },
+  AVANTE_PROMPT_INPUT_PREFIX = { name = "AvantePromptInputPrefix", link = "Comment" },
+  AVANTE_PROMPT_EDIT_PREFIX = { name = "AvantePromptEditPrefix", link = "Comment" },
   AVANTE_SIDEBAR_WIN_SEPARATOR = {
     name = "AvanteSidebarWinSeparator",
     fg_link_bg = "NormalFloat",

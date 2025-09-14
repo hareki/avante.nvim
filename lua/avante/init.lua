@@ -224,8 +224,6 @@ function H.api(fun)
   }) --[[@as ApiCaller]]
 end
 
-function H.signs() vim.fn.sign_define("AvanteInputPromptSign", { text = Config.windows.input.prefix }) end
-
 H.augroup = api.nvim_create_augroup("avante_autocmds", { clear = true })
 
 function H.autocmds()
@@ -458,7 +456,6 @@ function M.setup(opts)
   -- setup helpers
   H.autocmds()
   H.keymaps()
-  H.signs()
 
   M.did_setup = true
 

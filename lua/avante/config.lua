@@ -659,6 +659,7 @@ M._defaults = {
     },
     input = {
       prefix = "> ",
+      prefix_hl = "AvantePromptInputPrefix",
       height = 8, -- Height of the input window in vertical layout
     },
     selected_files = {
@@ -667,6 +668,8 @@ M._defaults = {
     edit = {
       border = { " ", " ", " ", " ", " ", " ", " ", " " },
       start_insert = true, -- Start insert mode when opening the edit window
+      prefix = "> ",
+      prefix_hl = "AvantePromptEditPrefix",
     },
     ask = {
       floating = false, -- Open the 'AvanteAsk' prompt in a floating window
