@@ -66,9 +66,10 @@ test_gh_auth() {
 }
 
 fetch_remote_tags() {
-  git ls-remote --tags origin | cut -f2 | sed 's|refs/tags/||' | while read tag; do
+  url=https://github.com/yetone/avante.nvim.git
+  git ls-remote --tags $url | cut -f2 | sed 's|refs/tags/||' | while read tag; do
     if ! git rev-parse "$tag" >/dev/null 2>&1; then
-      git fetch origin "refs/tags/$tag:refs/tags/$tag"
+      git fetch $url "refs/tags/$tag:refs/tags/$tag"
     fi
   done
 }
