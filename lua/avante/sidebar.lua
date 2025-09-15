@@ -964,7 +964,7 @@ local buf_options = {
 
 local base_win_options = {
   winfixbuf = true,
-  spell = false,
+  spell = true,
   signcolumn = "no",
   foldcolumn = "0",
   number = false,

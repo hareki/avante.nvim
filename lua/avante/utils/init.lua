@@ -430,7 +430,7 @@ function M.notify(msg, opts)
       pcall(function() vim.treesitter.language.add("markdown") end)
       vim.wo[win].conceallevel = 3
       vim.wo[win].concealcursor = ""
-      vim.wo[win].spell = false
+      vim.wo[win].spell = true
       local buf = api.nvim_win_get_buf(win)
       if not pcall(vim.treesitter.start, buf, lang) then
         vim.bo[buf].filetype = lang

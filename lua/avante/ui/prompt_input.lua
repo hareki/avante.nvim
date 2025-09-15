@@ -76,13 +76,14 @@ function PromptInput:open()
   self.winid = winid
 
   api.nvim_set_option_value("wrap", false, { win = winid })
-  api.nvim_set_option_value("winblend", 5, { win = winid })
+  api.nvim_set_option_value("winblend", 0, { win = winid })
   api.nvim_set_option_value(
     "winhighlight",
     "FloatBorder:AvantePromptInputBorder,Normal:AvantePromptInput",
     { win = winid }
   )
-  api.nvim_set_option_value("cursorline", true, { win = winid })
+  api.nvim_set_option_value("cursorline", false, { win = winid })
+  api.nvim_set_option_value("spell", true, { win = winid })
   api.nvim_set_option_value("modifiable", true, { buf = bufnr })
   Utils.add_status_prefix(Config.windows.edit.prefix, Config.windows.edit.prefix_hl, winid)
 
@@ -176,7 +177,7 @@ function PromptInput:show_shortcuts_hints()
   }
 
   self.shortcuts_hints_winid = api.nvim_open_win(buf, false, opts)
-  api.nvim_set_option_value("winblend", 10, { win = self.shortcuts_hints_winid })
+  api.nvim_set_option_value("winblend", 0, { win = self.shortcuts_hints_winid })
 end
 
 function PromptInput:close_shortcuts_hints()
